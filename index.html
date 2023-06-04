@@ -6,6 +6,20 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="js/main.mjs" type="module"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.9.0/vconsole.min.js"></script>
+    <style>
+        .small-title {
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .show-area {
+            width: 100%;
+        }
+
+        .el-row {
+            margin-bottom: 20px;
+        }
+    </style>
     <script>
         // init vConsole
         var vConsole = new VConsole();
@@ -14,39 +28,39 @@
 </head>
 <body>
 <div id="app">
-    <el-container>
-        <el-header>
-            <el-form :inline="true">
-                <el-form-item>
-                    <h2>反应训练</h2>
-                </el-form-item>
-            <el-form-item>
-                <el-switch
-                        v-model="switchValue"
-                        active-text="开"
-                        inactive-text="关"
-                        @change="switchChange"
-                ></el-switch>
-            </el-form-item>
-                <el-form-item>
-                    当前选择 {{currentBen}} 本,已经完成 {{countBen}} 本 ,剩余 {{currentBen-countBen}} 本
-                </el-form-item>
-            </el-form>
-        </el-header>
-        <el-main>
-            <el-form>
-                <el-form-item label="最小间隔（单位 秒）">
-                    <el-input-number v-model="numMin"></el-input-number>
-                </el-form-item>
-                <el-form-item label="最大间隔（单位 秒）">
-                    <el-input-number v-model="numMax"></el-input-number>
-                </el-form-item>
-                <el-form-item label="数量 (单位 本)">
-                    <el-slider size="large" v-model="currentBen" :step="100" show-stops :min="minBen" :max="maxBen"></el-slider>
-                </el-form-item>
-            </el-form>
-        </el-main>
-    </el-container>
+    <el-row :gutter="20">
+        <el-col :span="8">
+            <el-row class="small-title">
+                <h2>上传文本图片</h2>
+            </el-row>
+            <el-row>
+                <el-input type="file" v-model="fileName" @change="uploadImg"></el-input>
+            </el-row>
+            <el-row>
+                <!-- 用于展示图片 -->
+                <img id="show-img" class="show-area" />
+                <!-- 用于存放真实图片进行文字识别 -->
+                <img id="raw-img" style="display: none" />
+            </el-row>
+        </el-col>
+        <el-col :span="8">
+            <el-row class="small-title">
+                <h2>文字区域检测</h2>
+            </el-row>
+            <el-row>
+                <el-button type="primary" @click="predict">开始识别</el-button>
+            </el-row>
+            <el-row>
+                <canvas id="canvas" class="show-area"></canvas>
+            </el-row>
+        </el-col>
+        <el-col :span="8">
+            <el-row class="small-title">
+                <h2>识别结果展示</h2>
+            </el-row>
+            <span v-html="result"></span>
+        </el-col>
+    </el-row>
 </div>
 </body>
 </html>
