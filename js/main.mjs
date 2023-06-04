@@ -1,8 +1,7 @@
 import * as Vue from './node_modules/vue3/vue.esm-browser.mjs';
 import * as Element from './node_modules/element-plus/index.full.mjs';
-import {taikoBase64Str} from "./taiko.mjs";
 
-// import
+
 let {ref, onMounted, onUnmounted} = Vue;
 
 
@@ -63,7 +62,7 @@ let app = Vue.createApp({
             }
         };
 
-        return {fileName,uploadImg,predict,result}
+        return {fileName, uploadImg, predict, result}
     },
 });
 
