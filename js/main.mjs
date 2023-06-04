@@ -1,6 +1,6 @@
 import * as Vue from './node_modules/vue3/vue.esm-browser.mjs';
 import * as Element from './node_modules/element-plus/index.full.mjs';
-
+import jquery from 'https://cdn.jsdelivr.net/npm/jquery@3.7.0/+esm'
 
 let {ref, onMounted, onUnmounted} = Vue;
 
@@ -47,8 +47,34 @@ let app = Vue.createApp({
             }
         };
 
+
+        const getToken = async () => {
+            let urlStr = "https://aip.baidubce.com/oauth/2.0/token?client_id=DKw3aSToLoEt8THq8MzLqP7U&client_secret=EEvkjM1geOuGbTUSlvHtR44cXTE4KNnN&grant_type=client_credentials";
+
+
+            fetch(urlStr, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then(res => {
+                return res.json();
+            }).then(json => {
+                console.log('获取的结果', json.data);
+                return json;
+            }).catch(err => {
+                console.log('请求错误', err);
+            })
+
+        }
+
+
         const recognize = async (image, options) => {
             // 获取图像识别的结果
+            var token = getToken();
+
+
             return {text: ["1", "2", "3"], points: "ok"};
         }
 
